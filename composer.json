@@ -1,0 +1,9 @@
+{
+    "name": "a-horoshii/url-shortener",
+    "description": "Add form for create Short Url from long.",
+    "type": "drupal-module",
+    "require": {
+        "hashids/hashids": "^3.0"
+    },
+    "license": "GPL-2.0-or-later"
+}

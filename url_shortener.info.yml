@@ -3,4 +3,5 @@ description: Add form for create Short Url from long.
 package: Custom
 type: module
 version: 1.0
-core: 8.x|9.x
+core: 8.x
+core_version_requirement: ^8 || ^9
