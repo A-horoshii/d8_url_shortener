@@ -23,7 +23,7 @@ function url_shortener_schema() {
                 'description' => 'Hash for short url',
                 'type' => 'varchar',
                 'length' => 255,
-                'not null' => TRUE
+                'not null' => FALSE
             ],
             'url' => [
                 'description' => 'Url for redirect.',
