@@ -21,6 +21,7 @@ class UrlShortenController extends ControllerBase
     public function redirectAction(string $hash)
     {
         $redirectResponse = new TrustedRedirectResponse('https://translate.google.com/');
+        $redirectResponse->setTrustedTargetUrl('https://translate.google.com/');
         if ($redirectResponse instanceof TrustedRedirectResponse) {
             return $redirectResponse;
         } else {
