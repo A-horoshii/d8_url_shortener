@@ -1,0 +1,9 @@
+url_shortener.redirect:
+  path: '/short/{hash}'
+  defaults:
+    _controller: '\Drupal\url_shortener\Controller\UrlShortenController::redirectAction'
+    _title: 'Redirect from short Url'
+  options:
+    parameters:
+      hash:
+        type: string
