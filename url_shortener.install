@@ -33,7 +33,7 @@ function url_shortener_schema() {
             ],
             'redirect_quantity' => [
                 'description' => 'Quantity of redirects',
-                'type' => 'integer',
+                'type' => 'int',
                 'not null' => TRUE,
                 'default' => 0,
             ],
