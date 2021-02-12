@@ -3,9 +3,8 @@
 namespace Drupal\url_shortener\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\node\NodeInterface;
+use Drupal\Core\Routing\TrustedRedirectResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -18,14 +17,12 @@ class UrlShortenController extends ControllerBase
   /**
    * Redirect action from short url to long path. If short url not founded, return 404.
    * @param string $hash
-   * @param Request $request
    * @return RedirectResponse|NotFoundHttpException
    */
-  public function redirectAction(string $hash, Request $request)
+  public function redirectAction(string $hash)
   {
-    var_dump($hash);
-    $redirectResponse = new RedirectResponse('https://translate.google.com/');
-    if ($redirectResponse instanceof RedirectResponse) {
+    $redirectResponse = new TrustedRedirectResponse('https://translate.google.com/');
+    if ($redirectResponse instanceof TrustedRedirectResponse) {
       return $redirectResponse;
     } else {
       throw new NotFoundHttpException("Page not found");
