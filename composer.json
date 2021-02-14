@@ -1,5 +1,5 @@
 {
-    "name": "a-horoshii/url-shortener",
+    "name": "drupal/url-shortener",
     "description": "Add form for create Short Url from long.",
     "type": "drupal-module",
     "require": {

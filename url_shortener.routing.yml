@@ -9,3 +9,10 @@ url_shortener.redirect:
     parameters:
       hash:
         type: string
+entity.short_url.collection:
+  path: '/admin/short_urls'
+  defaults:
+    _entity_list: 'url_shortner_short_url'
+    _title: 'short Urls'
+  requirements:
+    _permission: 'administer short_urls'

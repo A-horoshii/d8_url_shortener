@@ -23,7 +23,7 @@ function url_shortener_schema() {
                 'description' => 'Hash for short url',
                 'type' => 'varchar',
                 'length' => 255,
-                'not null' => FALSE
+                'not null' => TRUE
             ],
             'url' => [
                 'description' => 'Url for redirect.',
@@ -41,16 +41,23 @@ function url_shortener_schema() {
                 'description' => 'The Unix timestamp when the url redirect life end.',
                 'type' => 'int',
                 'unsigned' => TRUE,
-                'not null' => TRUE,
+                'not null' => FALSE,
                 'default' => 0,
             ],
-            'created' => [
-                'description' => 'The Unix timestamp when the url was created.',
+            'changed' => [
+                'description' => 'The Unix timestamp when the url was changed.',
                 'type' => 'int',
                 'unsigned' => TRUE,
                 'not null' => TRUE,
                 'default' => 0,
             ],
+            'created' => [
+                'description' => 'The Unix timestamp when the url was changed.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ]
         ],
         'primary key' => ['id'],
         'unique key' => [
