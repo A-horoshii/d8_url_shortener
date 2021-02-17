@@ -1,0 +1,5 @@
+short_url_create:
+  route_name: short_url.admin_create
+  title: 'Add short url'
+  appears_on:
+    - entity.short_url.collection

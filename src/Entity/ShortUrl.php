@@ -3,6 +3,7 @@ namespace Drupal\url_shortener\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 
@@ -24,6 +25,9 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   ),
  *   handlers = {
  *     "list_builder" = "Drupal\url_shortener\ShortUrlListBuilder",
+ *     "form" = {
+ *       "create" = "Drupal\url_shortener\Form\ShortUrlCreateForm"
+ *     }
  *   },
  *   admin_permission = "administer short_urls",
  *   base_table = "url_shortener_urls",
@@ -31,6 +35,12 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   entity_keys = {
  *     "id" = "id",
  *     "hash" = "hash"
+ *   },
+ *   links = {
+ *     "canonical" = "/admin/short_urls/{url_shortner_short_url}",
+ *     "edit-form" = "/admin/short_urls/{url_shortner_short_url}/edit",
+ *     "cancel-form" = "/admin/short_urls/{url_shortner_short_url}/cancel",
+ *     "collection" = "/admin/short_urls",
  *   },
  *   common_reference_target = TRUE
  * )
@@ -197,15 +207,34 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
 
         $fields['time_life_end'] = BaseFieldDefinition::create('timestamp')
             ->setLabel(t('Time life end'))
-            ->setDescription(t('The time that the Short url was created.'));
+            ->setDescription(t('The time off redirect by short url.'));
 
-        $fields['created'] = BaseFieldDefinition::create('timestamp')
+        $fields['created'] = BaseFieldDefinition::create('created')
             ->setLabel(t('Created'))
             ->setDescription(t('The time that the Short url was created.'));
 
-        $fields['changed'] = BaseFieldDefinition::create('timestamp')
+        $fields['changed'] = BaseFieldDefinition::create('changed')
             ->setLabel(t('Changed'))
             ->setDescription(t('The time that the Short url was last edited.'));
         return $fields;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function preSave(EntityStorageInterface $storage) {
+        parent::preSave($storage);
+        $this->setRedirectQuantity(0);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+        parent::postSave($storage, $update);
+        if (empty($this->getHash())) {
+            $this->setHash($this->getId());
+            $this->save();
+        }
     }
 }

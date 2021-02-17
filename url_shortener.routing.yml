@@ -16,3 +16,17 @@ entity.short_url.collection:
     _title: 'short Urls'
   requirements:
     _permission: 'administer short_urls'
+short_url.admin_create:
+  path: '/admin/short_urls/create'
+  defaults:
+    _entity_form: 'url_shortner_short_url.create'
+    _title: 'Add short url'
+  requirements:
+    _entity_create_access: 'url_shortner_short_url'
+entity.url_shortner_short_url.edit_form:
+  path: '/admin/short_urls/{url_shortner_short_url}/edit'
+  defaults:
+    _entity_form: 'url_shortner_short_url.edit'
+    _title: 'Add short url'
+  requirements:
+    _entity_create_access: 'url_shortner_short_url'

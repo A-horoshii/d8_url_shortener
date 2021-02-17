@@ -1,6 +1,6 @@
 entity.short_url.collection:
-  title: short urls
+  title: Short urls
   route_name: entity.short_url.collection
-  description: 'Manage short urls.'
+  description: 'Manage short urls'
   parent: system.admin
   weight: 4
