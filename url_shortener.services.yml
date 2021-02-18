@@ -1,0 +1,8 @@
+services:
+  url_shortener.service.hash_generator:
+    class: Drupal\url_shortener\Service\HashGeneratorService
+    arguments:
+      - "@config.factory"
+  url_shortener.service.short_url:
+    class: Drupal\url_shortener\Service\ShortUrlService
+    arguments: ['@entity_type.manager','@url_shortener.service.hash_generator']

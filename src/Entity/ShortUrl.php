@@ -24,6 +24,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     plural = "@count short urls",
  *   ),
  *   handlers = {
+ *     "storage" = "Drupal\url_shortener\Storage\ShortUrlStorage",
  *     "list_builder" = "Drupal\url_shortener\ShortUrlListBuilder",
  *     "form" = {
  *       "create" = "Drupal\url_shortener\Form\ShortUrlCreateForm"
@@ -114,7 +115,7 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
     /**
      * @return int
      */
-    public function getTimeLifeEnd(): ?int
+    public function getTimeLifeEnd(): int
     {
         return $this->get('time_life_end')->value;
     }
@@ -233,7 +234,9 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
     public function postSave(EntityStorageInterface $storage, $update = TRUE) {
         parent::postSave($storage, $update);
         if (empty($this->getHash())) {
-            $this->setHash($this->getId());
+            $shortUrlService = \Drupal::getContainer()
+                ->get('url_shortener.service.short_url');
+            $this->setHash($shortUrlService->shortUrlGetHash($this));
             $this->save();
         }
     }

@@ -13,5 +13,5 @@ interface ShortUrlInterface extends ContentEntityInterface, EntityChangedInterfa
     public function setHash($hash);
     public function getRedirectQuantity(): int;
     public function addRedirectQuantity($inc = 1);
-    public function getTimeLifeEnd(): ?int;
+    public function getTimeLifeEnd(): int;
 }

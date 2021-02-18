@@ -1,4 +1,3 @@
 hash_salt: 'WERS#$%^3fDSw123'
 hash_min_length: 4
 hash_alphabet: 'abcdefghijklmnopqrstuvwxyz1234567890'
-link_default_ttl: 60
