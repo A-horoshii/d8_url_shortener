@@ -26,7 +26,14 @@ short_url.admin_create:
 entity.url_shortner_short_url.edit_form:
   path: '/admin/short_urls/{url_shortner_short_url}/edit'
   defaults:
-    _entity_form: 'url_shortner_short_url.edit'
-    _title: 'Add short url'
+    _entity_form: 'url_shortner_short_url.default'
+    _title: 'Edit'
+  requirements:
+    _entity_create_access: 'url_shortner_short_url'
+entity.url_shortner_short_url.delete_form:
+  path: '/admin/short_urls/{url_shortner_short_url}/delete'
+  defaults:
+    _entity_form: 'url_shortner_short_url.delete'
+    _title: 'Delete'
   requirements:
     _entity_create_access: 'url_shortner_short_url'

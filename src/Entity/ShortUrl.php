@@ -10,8 +10,6 @@ use Drupal\Core\Field\BaseFieldDefinition;
 /**
  * Defines the ShortUrl entity class.
  *
- * The base table name here is plural, despite Drupal table naming standards,
- * because "ShortUrl" is a reserved word in many databases.
  *
  * @ContentEntityType(
  *   id = "url_shortner_short_url",
@@ -27,7 +25,9 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "storage" = "Drupal\url_shortener\Storage\ShortUrlStorage",
  *     "list_builder" = "Drupal\url_shortener\ShortUrlListBuilder",
  *     "form" = {
- *       "create" = "Drupal\url_shortener\Form\ShortUrlCreateForm"
+ *       "default" = "Drupal\url_shortener\Form\ShortUrlForm",
+ *       "create" = "Drupal\url_shortener\Form\ShortUrlCreateForm",
+ *       "delete" = "Drupal\url_shortener\Form\ShortUrlDeleteForm"
  *     }
  *   },
  *   admin_permission = "administer short_urls",
@@ -35,12 +35,13 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   translatable = FALSE,
  *   entity_keys = {
  *     "id" = "id",
- *     "hash" = "hash"
+ *     "hash" = "hash",
+ *     "label" = "id"
  *   },
  *   links = {
  *     "canonical" = "/admin/short_urls/{url_shortner_short_url}",
  *     "edit-form" = "/admin/short_urls/{url_shortner_short_url}/edit",
- *     "cancel-form" = "/admin/short_urls/{url_shortner_short_url}/cancel",
+ *     "delete-form" = "/admin/short_urls/{url_shortner_short_url}/delete",
  *     "collection" = "/admin/short_urls",
  *   },
  *   common_reference_target = TRUE
@@ -61,7 +62,7 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
      * {@inheritdoc}
      */
     public function label() {
-        return 'test';
+        return $this->get('hash')->value;
     }
 
     /**
@@ -121,11 +122,11 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
     }
 
     /**
-     * @param int|null $timestamp
+     * @param int $timestamp
      *
      * @return $this
      */
-    public function setTimeLifeEnd(?int $timestamp): self
+    public function setTimeLifeEnd(int $timestamp): self
     {
         $this->get('time_life_end')->value = $timestamp;
 
@@ -165,7 +166,7 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
     }
 
     /**
-     * Gets the timestamp of the entity created for the current translation.
+     * Gets the timestamp of the entity created.
      *
      * @return int
      *   The timestamp of the last entity save operation.
@@ -175,7 +176,7 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
     }
 
     /**
-     * Sets the timestamp of the entity created for the current translation.
+     * Sets the timestamp of the entity created.
      *
      * @param int $timestamp
      *   The timestamp of the last entity save operation.

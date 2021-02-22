@@ -5,7 +5,7 @@ use Drupal\url_shortener\Entity\ShortUrlInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Defines an interface for ShortUrl entity storage classes.
+ * Defines an interface for HashGeneratorService classes.
  */
 interface HashGeneratorServiceInterface
 {

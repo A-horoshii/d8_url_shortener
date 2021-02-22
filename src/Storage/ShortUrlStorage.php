@@ -9,7 +9,7 @@ use Drupal\url_shortener\Entity\ShortUrlInterface;
  * Storage class for ShortUrl.
  *
  * This extends the Drupal\Core\Entity\Sql\SqlContentEntityStorage class,
- * adding required special handling for user objects.
+ * adding required special handling for ShortUrl objects.
  */
 class ShortUrlStorage extends SqlContentEntityStorage implements ShortUrlStorageInterface
 {

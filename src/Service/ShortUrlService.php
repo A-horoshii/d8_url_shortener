@@ -6,7 +6,7 @@ use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\url_shortener\Entity\ShortUrlInterface;
 
 /**
- * .
+ * The short url service for module.
  */
 class ShortUrlService implements ShortUrlServiceInterface
 {
@@ -26,7 +26,7 @@ class ShortUrlService implements ShortUrlServiceInterface
     protected $hashGenerator;
 
     /**
-     * Constructs a UserAuth object.
+     * Constructs a ShortUrl Service object.
      *
      * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
      *   The entity type manager.

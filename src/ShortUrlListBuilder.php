@@ -3,6 +3,7 @@
 namespace Drupal\url_shortener;
 
 use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -95,16 +96,16 @@ class ShortUrlListBuilder extends EntityListBuilder
                 'field' => 'time_life_end',
                 'specifier' => 'time_life_end',
             ],
-            'created' => [
-                'data' => $this->t('created'),
-                'field' => 'created',
-                'specifier' => 'created',
-            ],
-            'updated' => [
-                'data' => $this->t('updated'),
-                'field' => 'updated',
-                'specifier' => 'updated',
-            ],
+//            'created' => [
+//                'data' => $this->t('created'),
+//                'field' => 'created',
+//                'specifier' => 'created',
+//            ],
+//            'updated' => [
+//                'data' => $this->t('updated'),
+//                'field' => 'updated',
+//                'specifier' => 'updated',
+//            ],
 
         ];
         return $header + parent::buildHeader();
@@ -117,9 +118,11 @@ class ShortUrlListBuilder extends EntityListBuilder
         $row['id'] = $entity->getId();
         $row['hash'] = $entity->getHash();
         $row['url'] = $entity->getUrl();
-        $row['time_life_end'] = $entity->getTimeLifeEnd();
-        $row['created'] = $entity->getCreated();
         $row['redirect_quantity'] = $entity->getRedirectQuantity();
+        $row['time_life_end'] = DrupalDateTime::createFromTimestamp($entity->getTimeLifeEnd())->format('Y-m-d H:i:s');
+//        $row['created'] = DrupalDateTime::createFromTimestamp($entity->getTimeLifeEnd())->format('Y-m-d H:i:s');
+//        $row['updated'] = DrupalDateTime::createFromTimestamp($entity->getTimeLifeEnd())->format('Y-m-d H:i:s');
+
         return $row + parent::buildRow($entity);
     }
 

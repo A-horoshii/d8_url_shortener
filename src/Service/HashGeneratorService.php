@@ -6,7 +6,7 @@ use Hashids\Hashids;
 
 
 /**
- * Defines an interface for ShortUrl entity storage classes.
+ * Hash generator service for help generate hash from value.
  */
 class HashGeneratorService implements HashGeneratorServiceInterface
 {
