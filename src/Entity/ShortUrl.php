@@ -225,7 +225,9 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
      */
     public function preSave(EntityStorageInterface $storage) {
         parent::preSave($storage);
-        $this->setRedirectQuantity(0);
+        if (empty($this->getRedirectQuantity())) {
+            $this->setRedirectQuantity(0);
+        }
     }
 
     /**
