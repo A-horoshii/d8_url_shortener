@@ -20,14 +20,16 @@ class ShortUrlStorage extends SqlContentEntityStorage implements ShortUrlStorage
      */
     public function findByHash(string $hash): ?ShortUrlInterface
     {
-        var_dump($this->entityType->getBaseTable());
-       $obj = $this->database->select($this->entityType->getBaseTable(), 'su')
-            ->fields('su')
+        $result = null;
+        $id = $this->database->select($this->entityType->getBaseTable(), 'su')
+            ->fields('su',['id'])
             ->condition('su.hash', $hash)
             ->range(0, 1)
             ->execute()
-            ->fetchObject();
-        var_dump($obj);
-       return $obj;
+            ->fetchAssoc();
+        if (isset($id['id'])) {
+            $result = $this->load($id['id']);
+        }
+        return $result;
     }
 }
