@@ -136,7 +136,7 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
     /**
      * @return int
      */
-    public function getRedirectQuantity():int
+    public function getRedirectQuantity(): ?int
     {
         return  $this->get('redirect_quantity')->value;
     }
@@ -194,7 +194,6 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
     public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
         /** @var \Drupal\Core\Field\BaseFieldDefinition[] $fields */
         $fields = parent::baseFieldDefinitions($entity_type);
-
         $fields['id'] = BaseFieldDefinition::create('integer')
             ->setLabel(t('id'));
 
@@ -202,12 +201,21 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
             ->setLabel(t('hash'));
 
         $fields['url'] = BaseFieldDefinition::create('string')
+            ->setRequired(true)
+            ->setPropertyConstraints(
+                'value', ['Regex' => [
+                    'pattern' => '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu',
+                    'message' => t('Url field not valid.'),
+                ]]
+            )
             ->setLabel(t('url'));
 
         $fields['redirect_quantity'] = BaseFieldDefinition::create('integer')
+            ->setDefaultValue(0)
             ->setLabel(t('Redirect quantity'));
 
         $fields['time_life_end'] = BaseFieldDefinition::create('timestamp')
+            ->setRequired(true)
             ->setLabel(t('Time life end'))
             ->setDescription(t('The time off redirect by short url.'));
 
@@ -221,15 +229,6 @@ class ShortUrl  extends ContentEntityBase implements ShortUrlInterface
         return $fields;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function preSave(EntityStorageInterface $storage) {
-        parent::preSave($storage);
-        if (empty($this->getRedirectQuantity())) {
-            $this->setRedirectQuantity(0);
-        }
-    }
 
     /**
      * {@inheritdoc}

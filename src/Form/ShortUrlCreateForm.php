@@ -18,10 +18,12 @@ class ShortUrlCreateForm extends ContentEntityForm {
             '#title' => $this->t('Url'),
             '#type' => 'textfield',
             '#default_value' => '',
+            '#required' => true
         ];
         $form['short_url']['time_life_end'] = [
             '#title' => $this->t('Time life end'),
             '#type' => 'datetime',
+            '#required' => true,
             '#default_value' => DrupalDateTime::createFromTimestamp(time()+60*60),
         ];
         return $form;

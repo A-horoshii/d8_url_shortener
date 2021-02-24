@@ -18,11 +18,13 @@ class ShortUrlForm extends ContentEntityForm {
             '#title' => $this->t('Url'),
             '#type' => 'textfield',
             '#default_value' => $entity->getUrl(),
+            '#required' => true
         ];
         $form['short_url']['time_life_end'] = [
             '#title' => $this->t('Time life end'),
             '#type' => 'datetime',
             '#default_value' => $entity->getTimeLifeEnd()?DrupalDateTime::createFromTimestamp($entity->getTimeLifeEnd()):'',
+            '#required' => true
         ];
         return $form;
     }

@@ -68,21 +68,34 @@ class ShortUrlListBuilder extends EntityListBuilder
     /**
      * {@inheritdoc}
      */
+    public function load() {
+        $entity_query = $this->storage->getQuery();
+        $entity_query->condition('id', 0, '<>');
+        $entity_query->pager(50);
+        $header = $this->buildHeader();
+        $entity_query->tableSort($header);
+        $uids = $entity_query->execute();
+        return $this->storage->loadMultiple($uids);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function buildHeader()
     {
         $header = [
             'id' => [
-                'data' => $this->t('id'),
+                'data' => $this->t('Id'),
                 'field' => 'id',
                 'specifier' => 'id',
             ],
             'hash' => [
-                'data' => $this->t('hash'),
+                'data' => $this->t('Hash'),
                 'field' => 'hash',
                 'specifier' => 'hash',
             ],
             'url' => [
-                'data' => $this->t('url'),
+                'data' => $this->t('Url'),
                 'field' => 'url',
                 'specifier' => 'url',
             ],
@@ -92,21 +105,10 @@ class ShortUrlListBuilder extends EntityListBuilder
                 'specifier' => 'redirect_quantity',
             ],
             'time_life_end' => [
-                'data' => $this->t('time life end'),
+                'data' => $this->t('Time life end'),
                 'field' => 'time_life_end',
                 'specifier' => 'time_life_end',
-            ],
-//            'created' => [
-//                'data' => $this->t('created'),
-//                'field' => 'created',
-//                'specifier' => 'created',
-//            ],
-//            'updated' => [
-//                'data' => $this->t('updated'),
-//                'field' => 'updated',
-//                'specifier' => 'updated',
-//            ],
-
+            ]
         ];
         return $header + parent::buildHeader();
     }
@@ -120,9 +122,6 @@ class ShortUrlListBuilder extends EntityListBuilder
         $row['url'] = $entity->getUrl();
         $row['redirect_quantity'] = $entity->getRedirectQuantity();
         $row['time_life_end'] = DrupalDateTime::createFromTimestamp($entity->getTimeLifeEnd())->format('Y-m-d H:i:s');
-//        $row['created'] = DrupalDateTime::createFromTimestamp($entity->getTimeLifeEnd())->format('Y-m-d H:i:s');
-//        $row['updated'] = DrupalDateTime::createFromTimestamp($entity->getTimeLifeEnd())->format('Y-m-d H:i:s');
-
         return $row + parent::buildRow($entity);
     }
 

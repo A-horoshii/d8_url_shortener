@@ -1,0 +1,243 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - url_shortener
+id: url_shortner_short_url_admin_short_urls.
+label: Short urls
+module: url_shortener
+description: 'Find and manage Short urls.'
+tag: default
+base_table: url_shortener_urls
+base_field: id
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: perm
+        options:
+          perm: 'administer short_urls'
+      cache:
+        type: tag
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Filter
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: full
+        options:
+          items_per_page: 10
+          offset: 0
+          id: 0
+          total_pages: 0
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          summary: ''
+          columns:
+            id: id
+            hash: hash
+            url: url
+            time_life_end: time_life_end
+            created: created
+          info:
+            id:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-low
+            hash:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            url:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-low
+            time_life_end:
+              sortable: true
+              default_sort_order: desc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: priority-low
+          default: id
+          empty_table: true
+      row:
+        type: fields
+      filters:
+        hash:
+          id: hash
+          table: views
+          field: hash
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: combine_op
+            label: 'hash'
+            description: ''
+            use_operator: false
+            operator: combine_op
+            identifier: hash
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            operator_limit_selection: false
+            operator_list: {  }
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          fields:
+            name: name
+            mail: mail
+          plugin_id: combine
+      sorts:
+        created:
+          created: created
+          table: url_shortener_urls
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+          granularity: second
+          plugin_id: date
+          entity_type: url_shortner_short_url
+          entity_field: created
+      title: Short url
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content: 'No urls available.'
+          plugin_id: text_custom
+      use_more: false
+      use_more_always: false
+      use_more_text: more
+      display_comment: ''
+      use_ajax: false
+      hide_attachment_summary: false
+      show_admin_links: true
+      group_by: false
+      link_url: ''
+      link_display: page_1
+      css_class: ''
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      display_extenders: {  }
+    cache_metadata:
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      max-age: 0
+      tags: {  }
+  page_1:
+    display_plugin: page
+    id: page_1
+    display_title: Page
+    position: 1
+    display_options:
+      path: admin/short_urls
+      show_admin_links: false
+      menu:
+        type: 'default tab'
+        title: List
+        description: 'Find and manage Short urls.'
+        menu_name: admin
+        weight: -10
+        context: ''
+      tab_options:
+        type: normal
+        title: Short url
+        description: 'Manage short urls'
+        menu_name: admin
+        weight: 0
+      defaults:
+        show_admin_links: false
+      display_extenders: {  }
+    cache_metadata:
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      max-age: 0
+      tags: {  }
